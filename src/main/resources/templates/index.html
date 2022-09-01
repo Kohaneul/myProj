@@ -2,9 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>홈페이지</title>
 </head>
 <body>
-
+<button onclick="location.href='addForm.html'"
+        th:onclick="|location.href='@{/member/save}'|"
+        type="button">신규 회원가입</button>
 </body>
 </html>

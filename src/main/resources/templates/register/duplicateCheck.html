@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>아이디 중복확인창</title>
+</head>
+<body>
+<div>
+    <div th:value="${loginId}" th:text="${loginId}">메세지</div>
+    <button onclick="location.href='addForm.html'"
+            th:onclick="|location.href='@{/member/add}'|"
+            type="button">확인</button>
+</div>
+
+</body>
+</html>

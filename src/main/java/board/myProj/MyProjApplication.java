@@ -10,4 +10,7 @@ public class MyProjApplication {
 		SpringApplication.run(MyProjApplication.class, args);
 	}
 
+
+
+
 }
