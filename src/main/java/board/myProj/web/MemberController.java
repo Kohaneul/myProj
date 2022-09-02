@@ -1,9 +1,8 @@
 package board.myProj.web;
 
-import board.myProj.domain.member.Member;
-import board.myProj.domain.member.MemberForm;
+import board.myProj.domain.member.member.Member;
 import board.myProj.domain.member.MemberRepositoryImpl;
-import board.myProj.domain.member.MemberService;
+import board.myProj.domain.member.member.SaveMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -23,36 +22,28 @@ import java.util.List;
 @RequestMapping("/member")
 public class MemberController {
     private final MemberRepositoryImpl memberRepository;
-    private final MemberService memberService;
     @GetMapping
     public String home(){
         return "index";
     }
     @GetMapping("/save")
-    public String save(@ModelAttribute("member") MemberForm member){
+    public String save(@ModelAttribute Member member){
         return "/register/addForm";
     }
 
     @PostMapping("/save")
-    public String save2(@Validated @ModelAttribute("member") MemberForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-
-        if(!form.getPassword().equals(form.getPasswordCheck())){
-            bindingResult.reject("duplicatePw",null);
-        }
-        if(memberRepository.findByLoginId(form.getLoginId())!=null){
-            bindingResult.reject("duplicateId",new Object[]{form.getLoginId()},null);
-        }
-
+    public String save(@Validated @ModelAttribute("member") SaveMember form, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+//        if(memberRepository.findByLoginId(form.getLoginId())!=null){
+//            bindingResult.reject("duplicateId",new Object[]{form.getLoginId()},null);
+//        }
         if(bindingResult.hasErrors()){
             log.info("에러발생!!!!");
             log.info("error={}",bindingResult);
-
             return "/register/addForm";
         }
-        Member member = new Member(form.getName(),form.getLoginId(),form.getPassword(),form.getAddress(),form.getPhoneNumber());
-        System.out.println("member = " + member);
-        Member savedMember = memberRepository.save(member);
-        redirectAttributes.addAttribute("loginId",savedMember.getLoginId());
+        Member member = memberRepository.save(new Member(form.getId(),form.getName(),form.getLoginId(),form.getPassword(),form.getAddress(),form.getPhoneNumber()));
+        log.info("저장 완료!!!");
+        redirectAttributes.addAttribute("loginId",member.getLoginId());
         return "redirect:/member/{loginId}";
     }
 

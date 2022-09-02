@@ -5,8 +5,13 @@
     <title>홈페이지</title>
 </head>
 <body>
+<div>
 <button onclick="location.href='addForm.html'"
         th:onclick="|location.href='@{/member/save}'|"
         type="button">신규 회원가입</button>
+<button onclick="location.href='viewAll.html'"
+        th:onclick="|location.href='@{/member/all}'|"
+        type="button">회원목록</button>
+</div>
 </body>
 </html>

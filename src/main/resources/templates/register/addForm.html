@@ -16,9 +16,6 @@
         </div>
     <div>
             아이디 : <input type="text" id="loginId" th:field="*{loginId}" th:errorclass="field-error" placeholder="아이디입력">
-<!--        <span class="field-error" th:errors="*{duplicateId}">-->
-<!--            아이디 중복-->
-<!--        </span>-->
             <div class="field-error" th:errors="*{loginId}">
                 아이디 오류
             </div>
@@ -35,12 +32,6 @@
             </div>
             <div class="field-error" th:errors="*{password}">
                 비밀번호 오류
-            </div>
-            <div>
-            비밀번호(확인) : <input type="password" id="passwordCheck" th:field="*{passwordCheck}"  th:errorclass="field-error" placeholder="비밀번호 확인">
-                <div class="field-error" th:errors="*{passwordCheck}">
-                    비밀번호 오류
-                </div>
             </div>
         </div>
 

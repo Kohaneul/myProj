@@ -1,5 +1,6 @@
 package board.myProj.domain.member;
 
+import board.myProj.domain.member.member.Member;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -27,6 +28,7 @@ public class MemberRepositoryImpl implements MemberRepository{
             @Override
             public Member mapRow(ResultSet rs, int rowNum) throws SQLException {
                 Member member = new Member();
+                member.setId(rs.getInt("id"));
                 member.setName(rs.getString("name"));
                 member.setLoginId(rs.getString("loginId"));
                 member.setPassword(rs.getString("password"));
@@ -39,25 +41,17 @@ public class MemberRepositoryImpl implements MemberRepository{
 
     @Override
     public Member save(Member form){
-        String sql = "insert into member(name,loginId,password,address,phoneNumber) values(?,?,?,?,?)";
-        Member member = new Member(form.getName(),form.getLoginId(),form.getPassword(),form.getAddress(),form.getPhoneNumber());
-        template.update(sql,member);
-        return member;
+        String sql = "insert into Member(name,loginId,password,address,phoneNumber) values(?,?,?,?,?)";
+        template.update(sql,form.getName(),form.getLoginId(),form.getPassword(),form.getAddress(),form.getPhoneNumber());
+        return form;
     }
 
-    private RowMapper<Member> find(){
-        return (rs,rowNum)->{
-                Member member = new Member();
-                member.setName(rs.getString("name"));
-                member.setLoginId(rs.getString("loginId"));
-                member.setPassword(rs.getString("password"));
-                member.setAddress(rs.getString("address"));
-                member.setPhoneNumber(rs.getString("phoneNumber"));
-                return member;
-
-            };
+    @Override
+    public Member findById(int id) {
+        String sql = "select * from member where id=?";
+        log.info("id={}",id);
+        return template.queryForObject(sql,find(),id);
     }
-
 
 
     @Override
@@ -65,6 +59,21 @@ public class MemberRepositoryImpl implements MemberRepository{
         String sql = "select * from member where loginId=?";
         log.info("loginId={}",loginId);
         return template.queryForObject(sql,find(),loginId);
+    }
+
+
+    private RowMapper<Member> find(){
+        return (rs,rowNum)->{
+            Member member = new Member();
+            member.setId(rs.getInt("id"));
+            member.setName(rs.getString("name"));
+            member.setLoginId(rs.getString("loginid"));
+            member.setPassword(rs.getString("password"));
+            member.setAddress(rs.getString("address"));
+            member.setPhoneNumber(rs.getString("phonenumber"));
+            return member;
+
+        };
     }
 
     @Override
@@ -75,10 +84,10 @@ public class MemberRepositoryImpl implements MemberRepository{
     }
 
     @Override
-    public void delete(String loginId){
-        String sql = "delete from member where loginId=?";
-        log.info("loginId={}",loginId);
-        template.update(sql,loginId);
+    public void delete(Long id){
+        String sql = "delete from member where id=?";
+        log.info("delete id={}",id);
+        template.update(sql,id);
     }
 
 }

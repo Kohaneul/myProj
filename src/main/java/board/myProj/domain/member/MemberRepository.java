@@ -1,7 +1,6 @@
 package board.myProj.domain.member;
 
-import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.jdbc.core.RowMapper;
+import board.myProj.domain.member.member.Member;
 
 import java.util.List;
 
@@ -10,13 +9,14 @@ public interface MemberRepository {
 
     Member save(Member member);
 
+    Member findById(int id);
 
 
     Member findByLoginId(String loginId);
 
     void update(String password, String address, String phoneNumber,String loginId);
 
-    void delete(String loginId);
+    void delete(Long id);
 
 
 }

@@ -8,14 +8,16 @@
     <h1>회원 목록</h1>
 <table border="1">
     <tr>
+        <th>순번</th>
         <th>이름</th>
         <th>아이디</th>
         <th>주소</th>
         <th>휴대폰번호</th>
     </tr>
     <tr th:object="${member}">
-        <td th:text="${member.loginId}">loginId</td>
+        <td th:text="${member.id}">id</td>
         <td th:text="${member.name}">name</td>
+        <td th:text="${member.loginId}">loginId</td>
         <td th:text="${member.address}">address</td>
         <td th:text="${member.phoneNumber}">phoneNumber</td>
     </tr>
