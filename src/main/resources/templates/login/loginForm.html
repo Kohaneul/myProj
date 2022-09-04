@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <link th:href="@{/css/form.css}"href="../css/form.css" rel="stylesheet">
+  <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container">
+  <h2>로그인 페이지</h2>
+  <form th:action th:object="${login}" method="post">
+    <div th:if="${#fields.hasGlobalErrors()}">
+      <p class="errorMsg" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메세지</p>
+    </div>
+    <div>
+  ID : <input type="text" id="loginId" th:field="*{loginId}" placeholder="아이디 입력" th:errorclass="field-error">
+    <div class="field-error" th:errors="*{loginId}">
+      아이디 오류
+    </div>
+    </div>
+    <div>
+  PW : <input type="password" id="password" th:field="*{password}" placeholder="비밀번호 입력" th:errorclass="field-error">
+    <div class="field-error" th:errors="*{password}">
+       비밀번호오류
+    </div>
+    </div>
+    <div>
+    <button type="submit">제출</button>
+      <button onclick="location.href='index.html'"
+              th:onclick="|location.href='@{/}'|"
+              type="button">취소</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>

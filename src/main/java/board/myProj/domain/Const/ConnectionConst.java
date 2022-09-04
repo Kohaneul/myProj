@@ -1,4 +1,4 @@
-package board.myProj.domain.connection;
+package board.myProj.domain.Const;
 
 public interface ConnectionConst {
     public static final String URL = "jdbc:h2:tcp://localhost/~/test";

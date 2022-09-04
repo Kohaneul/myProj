@@ -61,16 +61,26 @@ public class MemberRepositoryImpl implements MemberRepository{
         return template.queryForObject(sql,find(),loginId);
     }
 
+    @Override
+    public Member findByLoginId2(String password, String phoneNumber) {
+        String sql = "select * from member where password = ? and phoneNumber=? ";
+        return template.queryForObject(sql,find(),password,phoneNumber);    }
+
+    @Override
+    public Member findByPassword(String loginId, String phoneNumber) {
+        String sql = "select * from member where loginId = ? and phoneNumber=? ";
+        return template.queryForObject(sql,find(),loginId,phoneNumber);  }
+
 
     private RowMapper<Member> find(){
         return (rs,rowNum)->{
             Member member = new Member();
             member.setId(rs.getInt("id"));
             member.setName(rs.getString("name"));
-            member.setLoginId(rs.getString("loginid"));
+            member.setLoginId(rs.getString("loginId"));
             member.setPassword(rs.getString("password"));
             member.setAddress(rs.getString("address"));
-            member.setPhoneNumber(rs.getString("phonenumber"));
+            member.setPhoneNumber(rs.getString("phoneNumber"));
             return member;
 
         };
@@ -84,10 +94,10 @@ public class MemberRepositoryImpl implements MemberRepository{
     }
 
     @Override
-    public void delete(Long id){
-        String sql = "delete from member where id=?";
-        log.info("delete id={}",id);
-        template.update(sql,id);
+    public void delete(String loginId){
+        String sql = "delete from member where loginId=?";
+        log.info("delete id={}",loginId);
+        template.update(sql,loginId);
     }
 
 }

@@ -1,15 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link th:href="@{/css/form.css}"href="../css/form.css" rel="stylesheet">
+
     <meta charset="UTF-8">
     <title>회원 목록 창</title>
 </head>
 <body>
+<div class="container">
     <h1>회원 정보</h1>
     <div>
 <table border="1">
     <thead>
     <tr>
+        <th>순서</th>
         <th>이름</th>
         <th>아이디</th>
         <th>주소</th>
@@ -20,15 +24,19 @@
     <tr th:each="member: ${members}">
         <td th:text="${member.id}">id</td>
         <td th:text="${member.name}">name</td>
-        <td th:text="${member.loginId}">loginId</td>
+        <td><a href="viewForm.html" th:href="@{/member/{loginId}(loginId=${member.loginId})}" th:text="${member.loginId}">loginId</a></td>
         <td th:text="${member.address}">address</td>
         <td th:text="${member.phoneNumber}">phoneNumber</td>
     </tr>
     </tbody>
 </table>
+        <br/>
         <button onclick="location.href='index.html'"
                 th:onclick="|location.href='@{/member}'|"
                 type="button">돌아가기</button>
     </div>
+    <button th:onclick="|location.href='@{/logout}'|"
+            type="button">로그아웃</button>
+</div>
 </body>
 </html>

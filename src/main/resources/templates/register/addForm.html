@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
     <link th:href="@{/css/form.css}"href="../css/form.css" rel="stylesheet">
+
+    <meta charset="UTF-8">
     <title>회원가입 창</title>
 </head>
 <body>
@@ -34,6 +35,14 @@
                 비밀번호 오류
             </div>
         </div>
+<!--        <div>-->
+<!--            <div>-->
+<!--                비밀번호 확인 : <input type="password" id="passwordCheck" th:field="*{passwordCheck}" th:errorclass="field-error" placeholder="비밀번호 확인">-->
+<!--            </div>-->
+<!--            <div class="field-error" th:errors="*{passwordCheck}">-->
+<!--                비밀번호 오류-->
+<!--            </div>-->
+<!--        </div>-->
 
         <div>
             <div>

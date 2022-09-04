@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/css/form.css}"href="../css/form.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <title>아이디 찾기</title>
+</head>
+<body>
+<div class="container">
+<h2>아이디 찾기</h2>
+<form th:action th:object="${member}" method="post">
+    휴대폰번호 : <input type="text" id="phoneNumber" th:field="*{phoneNumber}" placeholder="등록한 휴대폰 번호를 입력하세요">
+    비밀번호 : <input type="password" id="password" th:field="*{password}" placeholder="등록한 비밀번호를 입력하세요">
+    <button type="submit">제출</button>
+</form>
+</div>
+</body>
+</html>

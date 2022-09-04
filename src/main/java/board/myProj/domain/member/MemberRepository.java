@@ -13,10 +13,14 @@ public interface MemberRepository {
 
 
     Member findByLoginId(String loginId);
+    Member findByLoginId2(String password,String phoneNumber);
+
+    Member findByPassword(String loginId,String phoneNumber);
+
 
     void update(String password, String address, String phoneNumber,String loginId);
 
-    void delete(Long id);
+    void delete(String loginId);
 
 
 }

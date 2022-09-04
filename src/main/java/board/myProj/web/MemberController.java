@@ -3,6 +3,7 @@ package board.myProj.web;
 import board.myProj.domain.member.member.Member;
 import board.myProj.domain.member.MemberRepositoryImpl;
 import board.myProj.domain.member.member.SaveMember;
+import board.myProj.domain.member.member.UpdateMember;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -33,12 +34,13 @@ public class MemberController {
 
     @PostMapping("/save")
     public String save(@Validated @ModelAttribute("member") SaveMember form, BindingResult bindingResult, RedirectAttributes redirectAttributes){
-//        if(memberRepository.findByLoginId(form.getLoginId())!=null){
-//            bindingResult.reject("duplicateId",new Object[]{form.getLoginId()},null);
-//        }
         if(bindingResult.hasErrors()){
             log.info("에러발생!!!!");
             log.info("error={}",bindingResult);
+            return "/register/addForm";
+        }
+        if(memberRepository.findByLoginId(form.getLoginId())!=null){
+         bindingResult.reject("duplicateId",new Object[]{form.getLoginId()},null);
             return "/register/addForm";
         }
         Member member = memberRepository.save(new Member(form.getId(),form.getName(),form.getLoginId(),form.getPassword(),form.getAddress(),form.getPhoneNumber()));
@@ -71,13 +73,31 @@ public class MemberController {
         model.addAttribute("members",members);
         return "/register/viewAll";
     }
-//
-//    @GetMapping("/duplicateCheckPassword")
-//    public String duplicatePassword(@RequestParam String password){
-//        return "";
-//    }
 
 
+    @GetMapping("/{loginId}/edit")
+    public String updateMember(@PathVariable String loginId, Model model){
+        Member member = memberRepository.findByLoginId(loginId);
+        model.addAttribute("member",member);
+        return "/register/updateForm";
+    }
+
+    @PostMapping("/{loginId}/edit")
+    public String updateMember(@PathVariable String loginId, @Validated @ModelAttribute("member")UpdateMember form,BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return "/register/updateForm";
+        }
+        Member member = memberRepository.findByLoginId(loginId);
+        memberRepository.update(form.getPassword(),form.getAddress(),form.getPhoneNumber(),form.getLoginId());
+        return "redirect:/member/{loginId}";
+    }
+
+    @GetMapping("/{loginId}/delete")
+    public String deleteMember(@PathVariable String loginId){
+        Member member = memberRepository.findByLoginId(loginId);
+        memberRepository.delete(loginId);
+        return "redirect:/member/all";
+    }
 
 
 }

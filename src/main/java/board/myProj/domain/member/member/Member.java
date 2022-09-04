@@ -15,4 +15,5 @@ public class Member {
     private String name,loginId,password,address,phoneNumber;
 
 
+
 }
