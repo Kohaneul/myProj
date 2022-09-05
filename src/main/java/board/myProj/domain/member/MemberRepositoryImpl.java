@@ -2,6 +2,7 @@ package board.myProj.domain.member;
 
 import board.myProj.domain.member.member.Member;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -10,6 +11,7 @@ import javax.sql.DataSource;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Repository
@@ -41,47 +43,75 @@ public class MemberRepositoryImpl implements MemberRepository{
 
     @Override
     public Member save(Member form){
-        String sql = "insert into Member(name,loginId,password,address,phoneNumber) values(?,?,?,?,?)";
-        template.update(sql,form.getName(),form.getLoginId(),form.getPassword(),form.getAddress(),form.getPhoneNumber());
-        return form;
+        try {
+            String sql = "insert into Member(name,loginId,password,address,phoneNumber) values(?,?,?,?,?)";
+            template.update(sql, form.getName(), form.getLoginId(), form.getPassword(), form.getAddress(), form.getPhoneNumber());
+            return form;
+
+    } catch (EmptyResultDataAccessException e) {
+            return null;
+
+        }
     }
 
     @Override
     public Member findById(int id) {
-        String sql = "select * from member where id=?";
-        log.info("id={}",id);
-        return template.queryForObject(sql,find(),id);
+        try {
+            String sql = "select * from member where id=?";
+            log.info("id={}", id);
+            return template.queryForObject(sql, find(), id);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+
+        }
     }
 
 
     @Override
     public Member findByLoginId(String loginId){
-        String sql = "select * from member where loginId=?";
-        log.info("loginId={}",loginId);
-        return template.queryForObject(sql,find(),loginId);
+        try {
+            String sql = "select * from member where loginId=?";
+            log.info("loginId={}", loginId);
+            return template.queryForObject(sql, find(), loginId);
+        }
+     catch (EmptyResultDataAccessException e) {
+        return null;
+
+    }
     }
 
     @Override
     public Member findByLoginId2(String password, String phoneNumber) {
-        String sql = "select * from member where password = ? and phoneNumber=? ";
-        return template.queryForObject(sql,find(),password,phoneNumber);    }
+        try {
+            String sql = "select * from member where password = ? and phoneNumber=? ";
+            return template.queryForObject(sql, find(), password, phoneNumber);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
 
     @Override
     public Member findByPassword(String loginId, String phoneNumber) {
-        String sql = "select * from member where loginId = ? and phoneNumber=? ";
-        return template.queryForObject(sql,find(),loginId,phoneNumber);  }
+        try {
+            String sql = "select * from member where loginId = ? and phoneNumber=? ";
+            return template.queryForObject(sql, find(), loginId,phoneNumber);
+        }
+        catch(EmptyResultDataAccessException e){
+            return null;
+        }
+    }
 
 
     private RowMapper<Member> find(){
         return (rs,rowNum)->{
-            Member member = new Member();
-            member.setId(rs.getInt("id"));
-            member.setName(rs.getString("name"));
-            member.setLoginId(rs.getString("loginId"));
-            member.setPassword(rs.getString("password"));
-            member.setAddress(rs.getString("address"));
-            member.setPhoneNumber(rs.getString("phoneNumber"));
-            return member;
+                Member member = new Member();
+                member.setId(rs.getInt("id"));
+                member.setName(rs.getString("name"));
+                member.setLoginId(rs.getString("loginId"));
+                member.setPassword(rs.getString("password"));
+                member.setAddress(rs.getString("address"));
+                member.setPhoneNumber(rs.getString("phoneNumber"));
+                return member;
 
         };
     }

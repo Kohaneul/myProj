@@ -3,6 +3,7 @@ package board.myProj.domain.member;
 import board.myProj.domain.member.member.Member;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository {
     List<Member> findAll();
@@ -13,6 +14,7 @@ public interface MemberRepository {
 
 
     Member findByLoginId(String loginId);
+
     Member findByLoginId2(String password,String phoneNumber);
 
     Member findByPassword(String loginId,String phoneNumber);

@@ -8,11 +8,26 @@
 <body>
 <div class="container">
 <h2>아이디 찾기</h2>
-<form th:action th:object="${member}" method="post">
-    휴대폰번호 : <input type="text" id="phoneNumber" th:field="*{phoneNumber}" placeholder="등록한 휴대폰 번호를 입력하세요">
-    비밀번호 : <input type="password" id="password" th:field="*{password}" placeholder="등록한 비밀번호를 입력하세요">
+<form action="idFind_.html" th:action th:object="${member}" method="post">
+    <div th:if="${#fields.hasGlobalErrors()}">
+        <p class="errorMsg" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메세지</p>
+    </div>
+
+    <div>
+    <li>휴대폰번호 : <input type="text" id="phoneNumber" th:field="*{phoneNumber}" th:errorclass="field-error" placeholder="등록한 휴대폰 번호 입력"></li>
+    <div class="field-error" th:errors="*{phoneNumber}">
+        휴대폰번호 오류
+    </div>
+
+    </div>
+
+    <div>
+    <li>비밀번호 : <input type="password" id="password" th:field="*{password}" th:errorclass="field-error" placeholder="등록한 비밀번호를 입력"></li>
+
+    </div>
     <button type="submit">제출</button>
 </form>
+
 </div>
 </body>
 </html>
