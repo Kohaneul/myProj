@@ -15,7 +15,6 @@ import java.util.stream.Stream;
 
 @Component
 public class MemberValidation implements Validator {
-    private MemberRepository memberRepository;
     @Override
     public boolean supports(Class<?> clazz) {
         return Member.class.isAssignableFrom(clazz);
@@ -34,6 +33,9 @@ public class MemberValidation implements Validator {
         if(!StringUtils.hasText(member.getPassword())){
             errors.rejectValue("password","password");
         }
+        if(!StringUtils.hasText(member.getPassword())){
+            errors.rejectValue("passwordCheck","passwordCheck");
+        }
         if(!StringUtils.hasText(member.getAddress())){
             errors.rejectValue("address","address");
         }
@@ -41,8 +43,6 @@ public class MemberValidation implements Validator {
         if(!StringUtils.hasText(member.getPhoneNumber())){
             errors.rejectValue("phoneNumber","phoneNumber");
         }
-
-
     }
 
 

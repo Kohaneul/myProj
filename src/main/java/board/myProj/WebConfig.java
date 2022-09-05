@@ -1,6 +1,6 @@
 package board.myProj;
 
-import board.myProj.domain.member.login.interceptor.loginInterceptor;
+import board.myProj.web.interceptor.loginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -8,6 +8,12 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new loginInterceptor()).addPathPatterns("/member/**").order(1);
+        registry.addInterceptor(new loginInterceptor()).addPathPatterns("/member/**","/board/**").order(1);
     }
+
+//    @Override
+//    public Validator getValidator() {
+//        return new MemberValidation();
+//    }
+
 }

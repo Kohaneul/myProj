@@ -9,8 +9,7 @@
 <div class="container">
     <span th:if="${session.loginMember == null}">
         <h2>회원가입 / 로그인을 진행해주세요.</h2>
-        <button onclick="location.href='addForm.html'"
-                th:onclick="|location.href='@{/member/save}'|"
+        <button th:onclick="|location.href='@{/signUp}'|"
                 type="button">신규 회원가입</button>
         <button onclick="location.href='loginForm.html'" th:onclick="|location.href='@{/login}'|"type="button">로그인</button>
     </span>

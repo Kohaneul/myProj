@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class MemberService {
 
+    public String pwCheck(String password,String passwordCheck){
+        return password.equals(passwordCheck)?null:"비밀번호가 불일치합니다.";
+    }
 
     public String Converter(String data) {
         int len = data.length();

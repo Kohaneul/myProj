@@ -1,12 +1,8 @@
 package board.myProj.domain.member.member;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
-import org.springframework.format.annotation.NumberFormat;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
 
@@ -20,12 +16,13 @@ public class SaveMember {
     private String loginId;
     @NotEmpty
     @Pattern(regexp = "\\d{5,10}$", message = "비밀번호는 5자리 이상 10자리 미만의 수를 사용하세요.")
-    private String password;
+    private String password,passwordCheck;
+
     @NotEmpty
     @Length(min = 5,max = 30)
     private String address;
     @NotEmpty
-    @Pattern(regexp = "^\\d{3}\\d{3,4}\\d{4}$",message = "휴대폰 번호 양식은 00000000000입니다.")
+    @Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$",message = "휴대폰 번호 양식은 000-0000-0000입니다.")
     private String phoneNumber;
 
 }

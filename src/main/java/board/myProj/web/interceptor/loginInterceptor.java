@@ -1,4 +1,4 @@
-package board.myProj.domain.member.login.interceptor;
+package board.myProj.web.interceptor;
 
 import board.myProj.domain.Const.SessionConst;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +17,6 @@ public class loginInterceptor implements HandlerInterceptor {
         HttpSession session =request.getSession(false);
         String requestURI=request.getRequestURI();
         log.info("requestURI={}",requestURI);
-
         if(session==null || session.getAttribute(SessionConst.LOGIN_MEMBER)==null){
            response.sendRedirect("/");
            return false;
@@ -27,11 +26,9 @@ public class loginInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        HandlerInterceptor.super.postHandle(request, response, handler, modelAndView);
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
-        HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
     }
 }
