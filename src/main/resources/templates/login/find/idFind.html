@@ -15,15 +15,15 @@
 
     <div>
     <li>휴대폰번호 : <input type="text" id="phoneNumber" th:field="*{phoneNumber}" th:errorclass="field-error" placeholder="등록한 휴대폰 번호 입력"></li>
-    <div class="field-error" th:errors="*{phoneNumber}">
-        휴대폰번호 오류
-    </div>
+
 
     </div>
 
     <div>
     <li>비밀번호 : <input type="password" id="password" th:field="*{password}" th:errorclass="field-error" placeholder="등록한 비밀번호를 입력"></li>
-
+        <div class="field-error" th:errors="*{password}">
+            휴대폰번호 오류
+        </div>
     </div>
     <button type="submit">제출</button>
 </form>

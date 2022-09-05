@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -101,8 +102,7 @@ public class MemberController {
     public String findId(@Validated @ModelAttribute("member") Member findMember,BindingResult bindingResult,Model model){
         Member member = memberRepository.findByLoginId2(findMember.getPassword(), findMember.getPhoneNumber());
         if(member==null){
-            bindingResult.addError(new FieldError("member","phoneNumber","값 오류"));
-            return "/login/find/idFind";
+            bindingResult.addError(new ObjectError("member","아이디를 찾을 수 없습니다."));
         }
         if(bindingResult.hasErrors()){
             log.info("error!!!={}",bindingResult);
@@ -123,8 +123,7 @@ public class MemberController {
 
         Member member = memberRepository.findByPassword(findMember.getLoginId(), findMember.getPhoneNumber());
         if(member==null){
-            bindingResult.addError(new FieldError("member","phoneNumber","값 오류"));
-            return "/login/find/passwordFind";
+            bindingResult.addError(new ObjectError("member","비밀번호를 찾을 수 없습니다."));
         }
         if(bindingResult.hasErrors()){
             return "/login/find/passwordFind";
