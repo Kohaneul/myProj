@@ -11,21 +11,16 @@
   <div>
     <h2>회원가입</h2>
   </div>
+
   <form action="viewForm.html" th:action th:object="${board}" method="post">
     <div th:if="${#fields.hasGlobalErrors()}">
       <p class="errorMsg" th:each="err : ${#fields.globalErrors()}" th:text="${err}">글로벌 오류 메세지</p>
     </div>
     <div>
-      아이디 : <input type="text" id="loginId" th:field="*{loginId}" th:errorclass="field-error" placeholder="아이디입력">
-      <div class="field-error" th:errors="*{loginId}">
-        아이디 오류
-      </div>
+      아이디 : <input type="text" name="loginId" th:value="${session.loginMember.loginId}" readonly>
     </div>
     <div>
-      이름 : <input type="text" id="name" th:field="*{name}" th:errorclass="field-error" placeholder="아이디입력">
-      <div class="field-error" th:errors="*{name}">
-        이름 오류
-      </div>
+      작성자 : <input type="text" name="name"  th:value="${session.loginMember.name}" readonly>
     </div>
     <div>
       <div>
@@ -37,33 +32,24 @@
     </div>
     <div>
       <div>
-        비밀번호 확인 : <input type="password" id="passwordCheck" th:field="*{passwordCheck}" th:errorclass="field-error" placeholder="비밀번호 확인">
+        제목 : <input type="text" id="title" th:field="*{title}" th:errorclass="field-error" placeholder="제목 입력">
       </div>
-      <div class="field-error" th:errors="*{passwordCheck}">
-        비밀번호 오류
-      </div>
-    </div>
-
-    <div>
-      <div>
-        주소 : <input type="text" id="address" th:field="*{address}" th:errorclass="field-error" placeholder="주소 입력">
-      </div>
-      <div class="field-error" th:errors="*{address}">
-        주소 오류
+      <div class="field-error" th:errors="*{title}">
+        제목 오류
       </div>
     </div>
     <div>
       <div>
-        전화번호 : <input type="text" id="phoneNumber" th:field="*{phoneNumber}" th:errorclass="field-error" placeholder="주소 입력">
+        내용 : <input type="text" id="content" th:field="*{content}" th:errorclass="field-error" placeholder="주소 입력">
       </div>
-      <div class="field-error" th:errors="*{phoneNumber}">
-        전화번호 오류
+      <div class="field-error" th:errors="*{content}">
+        내용 오류
       </div>
     </div>
-    <button type="submit">상품 등록</button>
-    <button onclick="location.href='index.html'"
-            th:onclick="|location.href='@{/}'|"
-            type="button">등록 취소</button>
+    <button type="submit">게시글 저장</button>
+    <button onclick="location.href='viewAll.html'"
+            th:onclick="|location.href='@{/board/all}'|"
+            type="button">돌아가기</button>
   </form>
 
 </div>

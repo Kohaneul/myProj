@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link th:href="@{/css/form.css}"href="../css/form.css" rel="stylesheet">
+
+    <meta charset="UTF-8">
+    <title>회원 목록 창</title>
+</head>
+<body>
+<div class="container">
+    <h1>회원 정보</h1>
+    <div>
+<table border="1">
+    <thead>
+    <tr>
+        <!--    //   (no),loginId,name,password,title,content,(count),(write_date)    -->
+
+        <th>순서</th>
+        <th>아이디</th>
+        <th>작성자</th>
+        <th>제목</th>
+        <th>내용</th>
+        <th>조회수</th>
+        <th>작성일</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="board: ${board}">
+        <td th:text="${board.no}">no</td>
+        <td th:text="${board.loginId}">loginId</td>
+        <td th:text="${board.name}">name</td>
+        <td><a href="viewForm.html" th:href="@{/board/{no}(no=${board.no})}" th:text="${member.title}">title</a></td>
+        <td th:text="${board.content}">content</td>
+        <td th:text="${board.count}">count</td>
+        <td th:text="${board.write_date}">write_date</td>
+    </tr>
+    </tbody>
+</table>
+        <br/>
+        <button onclick="location.href='addForm.html'"
+                th:onclick="|location.href='@{/board/add}'|"
+                type="button">신규등록</button>
+    </div>
+    <button th:onclick="|location.href='@{/logout}'|"
+            type="button">로그아웃</button>
+</div>
+</body>
+</html>

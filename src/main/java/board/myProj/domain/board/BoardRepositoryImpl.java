@@ -1,5 +1,6 @@
 package board.myProj.domain.board;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -12,7 +13,10 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Optional;
+
 @Repository
+@Slf4j
 public class BoardRepositoryImpl implements BoardRepository{
     private final JdbcTemplate template;
 
@@ -29,46 +33,47 @@ public class BoardRepositoryImpl implements BoardRepository{
                 board.setNo(rs.getInt("no"));
                 board.setLoginId(rs.getString("loginId"));
                 board.setName(rs.getString("name"));
-                board.setContent(rs.getString("content"));
                 board.setPassword(rs.getString("password"));
+                board.setTitle(rs.getString("title"));
+                board.setContent(rs.getString("content"));
+                board.setCount(rs.getInt("count"));
+                board.setWrite_date(rs.getDate("write_date"));
                 return null;
             }
         });
     }
-
     @Override
     public Board save(Board board) {
-        try {
-            String sql = "insert into Board(loginId, name, content, password,localDate) values(?,?,?,?,?)";
-            template.update(sql, board.getLoginId(), board.getName(), board.getContent(), board.getPassword(),LocalDateTime.now());
-            return board;
-        }
-        catch(EmptyResultDataAccessException e){
-            return null;
-        }
+            String sql = "insert into Board(loginId, name,password,title, content) values(?,?,?,?,?)";
+            template.update(sql, board.getLoginId(), board.getName(), board.getPassword(),board.getTitle(),board.getContent());
+            log.info("저장완료!!!!");
+            log.info("no={}",board.getNo());
+       return board;
     }
 
     @Override
-    public Board findById(int id) {
+    public Board findById(String loginId) {
+        String sql="select * from Board where loginId = ? ";
         try{
-            String sql="select * from Board where loginId = ? ";
-           return template.queryForObject(sql,find(),id);
+            return template.queryForObject(sql,find(),loginId);
+
         }
         catch(EmptyResultDataAccessException e){
             return null;
         }
+
     }        //no, loginId, name, content,password, localdate
 
     @Override
     public Board findByNo(int no) {
+        String sql = "select * from Board where no = ? ";
         try{
-            String sql="select * from Board where no = ? ";
             return template.queryForObject(sql,find(),no);
+
         }
         catch(EmptyResultDataAccessException e){
             return null;
         }    }
-
 
     private RowMapper<Board> find(){
         return (rs,rowNum)->{
@@ -76,9 +81,11 @@ public class BoardRepositoryImpl implements BoardRepository{
             board.setNo(rs.getInt("no"));
             board.setLoginId(rs.getString("loginId"));
             board.setName(rs.getString("name"));
-            board.setContent(rs.getString("content"));
             board.setPassword(rs.getString("password"));
-            board.setLocalDateTime((LocalDateTime) rs.getObject("localDateTime"));
+            board.setTitle(rs.getString("title"));
+            board.setContent(rs.getString("content"));
+            board.setCount(rs.getInt("count"));
+            board.setWrite_date(rs.getDate("write_date"));
             return board;
         };
     }

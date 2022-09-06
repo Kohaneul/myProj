@@ -14,10 +14,13 @@
         <button onclick="location.href='loginForm.html'" th:onclick="|location.href='@{/login}'|"type="button">로그인</button>
     </span>
     <span th:if="${session.loginMember != null}">
-       <h2> [<span th:text="${session.loginMember}"></span>]님 환영합니다.</h2>
+       <h2> [<span th:text="${session.loginMember.loginId}"></span>]님 환영합니다.</h2>
         <button onclick="location.href='viewAll.html'"
                 th:onclick="|location.href='@{/member/all}'|"
                 type="button">전체보기</button>
+         <button onclick="location.href='viewAll.html'"
+                 th:onclick="|location.href='@{/board/all}'|"
+                 type="button">게시글보기</button>
         <button th:onclick="|location.href='@{/logout}'|" type="button">로그아웃</button>
     </span>
 </div>

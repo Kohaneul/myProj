@@ -4,16 +4,18 @@
     <link th:href="@{/css/form.css}"href="../css/form.css" rel="stylesheet">
 
     <meta charset="UTF-8">
-    <title>회원 목록 창</title>
+    <title>게시글 상세보기</title>
 </head>
 <body>
+
+<!--    //   (no),loginId,name,password,title,content,(count),(write_date)    -->
+
 <div class="container">
-    <h1>회원 목록</h1>
-    <li>순번:<span th:text="${member.id}">id</span></li>
-    <li>이름 :   <span th:text="${member.name}">name</span></li>
-    <li>아이디 :    <span th:text="${member.loginId}">loginId</span></li>
-    <li> 주소 :   <span th:text="${member.address}">address</span></li>
-    <li>휴대폰번호 :    <span th:text="${member.phoneNumber}">phoneNumber</span></li>
+    <h1>상세보기</h1>
+    <li>순번:<span th:text="${board.no}">no</span></li>
+    <li>이름(작성자) :   <span th:text="${board.name}"/>(<span th:text="${board.loginId}"/>)</li>
+    <li> 제목 :   <span th:text="${board.title}">address</span></li>
+    <li> 내용 :    <span th:text="${board.content}">content</span></li>
     <div>
     <button onclick="location.href='index.html'"
             th:onclick="|location.href='@{/}'|"
@@ -27,6 +29,9 @@
                 th:onclick="|location.href='@{/member/all}'|"
                 type="button">전체보기</button>
     </div>
+    <button onclick="location.href='viewAll.html'"
+            th:onclick="|location.href='@{/board/all}'|"
+            type="button">전체 목록</button>
     <button th:onclick="|location.href='@{/logout}'|"
             type="button">로그아웃</button>
 </div>

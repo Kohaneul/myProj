@@ -40,7 +40,9 @@ public class loginController {
             return "/login/loginForm";
         }
         HttpSession session = request.getSession();
-        session.setAttribute(SessionConst.LOGIN_MEMBER,member.getLoginId());
+        session.setAttribute(SessionConst.LOGIN_MEMBER,member);
+        log.info("******* session={},info={},name={}",session.getAttribute(SessionConst.LOGIN_MEMBER).getClass(),session.getAttribute(SessionConst.LOGIN_MEMBER),SessionConst.LOGIN_MEMBER);
+
 
         return "redirect:/";
     }
@@ -50,7 +52,7 @@ public class loginController {
         HttpSession session = request.getSession(false);
         if(session!=null){
             log.info("sessionMember={}",session.getAttribute(SessionConst.LOGIN_MEMBER));
-            log.info("session DELETE!!");
+            log.info("session DELETE!!={}");
             session.invalidate();
         }
 

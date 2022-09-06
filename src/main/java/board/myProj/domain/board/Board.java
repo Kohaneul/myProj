@@ -1,26 +1,21 @@
 package board.myProj.domain.board;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Board {
-//no,localDateTime,loginId,name,content,password
-    @NotNull
-    private Integer no;
 
+    private Integer no,count;
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime localDateTime;
-
-    @NotEmpty
-    private String loginId,name,content,password;
+    private Date write_date;
+    private String loginId,password,name,title,content;
 
 
 }

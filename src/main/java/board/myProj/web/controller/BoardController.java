@@ -1,8 +1,12 @@
 package board.myProj.web.controller;
 
+import board.myProj.domain.Const.SessionConst;
 import board.myProj.domain.board.Board;
 import board.myProj.domain.board.BoardRepository;
+import board.myProj.domain.board.SaveBoard;
+import board.myProj.domain.member.member.Member;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,23 +14,41 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.List;
+import java.util.Optional;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping ("/board")
+@Slf4j
 public class BoardController {
     private final BoardRepository boardRepository;
+
+    @GetMapping("/all")
+    public String viewAll(Model model){
+        List<Board> board = boardRepository.findAll();
+        model.addAttribute("board",board);
+        return "board/viewAll";
+    }
 
     @GetMapping("/add")
     public String upload(@ModelAttribute Board board){
     return "board/addForm";
     }
 
+
     @PostMapping("/add")
-    public String upload(@Validated @ModelAttribute Board board, BindingResult bindingResult, RedirectAttributes redirectAttributes){
+    public String upload(@Validated @ModelAttribute("board") SaveBoard savedBoard, BindingResult bindingResult, RedirectAttributes redirectAttributes, HttpServletRequest request){
         if(bindingResult.hasErrors()){
+            log.info("에러내용 ={} ",bindingResult);
             return "board/addForm";
         }
-        redirectAttributes.addAttribute("no",board.getNo());
+        //loginId, name,password,title, content
+        Board save = boardRepository.save( new Board(savedBoard.getNo(),savedBoard.getCount(),savedBoard.getWrite_date(), savedBoard.getLoginId(),savedBoard.getPassword(), savedBoard.getName(),savedBoard.getTitle(),savedBoard.getContent()));
+
+        redirectAttributes.addAttribute("no",save.getNo());
         return "redirect:/board/{no}";
     }
 
