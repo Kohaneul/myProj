@@ -15,7 +15,6 @@
     <tr>
         <!--    //   (no),loginId,name,password,title,content,(count),(write_date)    -->
 
-        <th>순서</th>
         <th>아이디</th>
         <th>작성자</th>
         <th>제목</th>
@@ -26,7 +25,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="board: ${board}">
+    <tr th:each="board: ${boards}">
         <td th:text="${board.no}">no</td>
         <td th:text="${board.loginId}">loginId</td>
         <td th:text="${board.name}">name</td>

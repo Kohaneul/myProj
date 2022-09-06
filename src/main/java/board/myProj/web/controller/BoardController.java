@@ -1,10 +1,9 @@
 package board.myProj.web.controller;
 
-import board.myProj.domain.Const.SessionConst;
 import board.myProj.domain.board.Board;
 import board.myProj.domain.board.BoardRepository;
+import board.myProj.domain.board.BoardRepositoryImpl;
 import board.myProj.domain.board.SaveBoard;
-import board.myProj.domain.member.member.Member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -15,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,10 +23,11 @@ import java.util.Optional;
 public class BoardController {
     private final BoardRepository boardRepository;
 
+
     @GetMapping("/all")
     public String viewAll(Model model){
-        List<Board> board = boardRepository.findAll();
-        model.addAttribute("board",board);
+        List<Board> boards = boardRepository.findAll();
+        model.addAttribute("boards",boards);
         return "board/viewAll";
     }
 
@@ -47,7 +45,7 @@ public class BoardController {
         }
         //loginId, name,password,title, content
         Board save = boardRepository.save( new Board(savedBoard.getNo(),savedBoard.getCount(),savedBoard.getWrite_date(), savedBoard.getLoginId(),savedBoard.getPassword(), savedBoard.getName(),savedBoard.getTitle(),savedBoard.getContent()));
-
+        log.info("info={}",save.getNo());
         redirectAttributes.addAttribute("no",save.getNo());
         return "redirect:/board/{no}";
     }
